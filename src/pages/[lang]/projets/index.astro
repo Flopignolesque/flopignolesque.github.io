@@ -1,0 +1,57 @@
+---
+import type { GetStaticPaths } from 'astro';
+import Base from '../../../layouts/Base.astro';
+import SectionTitle from '../../../components/SectionTitle.astro';
+import { t, path, langPaths, type Lang } from '../../../i18n';
+import { getProjects, projectSlug } from '../../../lib/content';
+
+export const getStaticPaths = (() => langPaths()) satisfies GetStaticPaths;
+
+const lang = Astro.params.lang as Lang;
+const ui = t(lang);
+const projects = await getProjects(lang);
+---
+
+<Base lang={lang} route="/projets/" title={ui.projects.title} description={ui.projects.intro}>
+  <section class="container-site pt-16 md:pt-24">
+    <SectionTitle as="h1" label="ls ./projets" title={ui.projects.title} />
+    <p class="max-w-2xl text-lg text-muted">{ui.projects.intro}</p>
+
+    <ol class="mt-16 border-t border-line" data-reveal-group>
+      {
+        projects.map((project, i) => (
+          <li class="border-b border-line">
+            <a
+              href={path(lang, `/projets/${projectSlug(project)}/`)}
+              class="glitch group grid gap-3 py-7 md:grid-cols-[4rem_1.2fr_1.4fr_auto] md:items-center md:gap-8 md:py-9"
+            >
+              <span class="font-mono text-xs text-accent">{String(i + 1).padStart(2, '0')}</span>
+              <span class="space-y-1">
+                <span class="glitch-target block text-2xl font-semibold tracking-tight transition-colors group-hover:text-accent md:text-3xl">
+                  {project.data.title}
+                </span>
+                <span class="block font-mono text-xs text-muted">
+                  {project.data.kind} · {project.data.year}
+                </span>
+              </span>
+              <span class="space-y-3">
+                <span class="block text-muted">{project.data.tagline}</span>
+                <span class="flex flex-wrap gap-1.5">
+                  {project.data.tags.slice(0, 5).map((tag) => (
+                    <span class="tag">{tag}</span>
+                  ))}
+                </span>
+              </span>
+              <span
+                class="hidden font-mono text-muted transition-all duration-300 group-hover:translate-x-1 group-hover:text-accent md:block"
+                aria-hidden="true"
+              >
+                →
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+</Base>

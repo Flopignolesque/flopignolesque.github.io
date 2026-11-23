@@ -1,0 +1,114 @@
+---
+import type { GetStaticPaths } from 'astro';
+import Base from '../../layouts/Base.astro';
+import SectionTitle from '../../components/SectionTitle.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { t, path, langPaths, type Lang } from '../../i18n';
+import { site } from '../../data/site';
+import { getProjects } from '../../lib/content';
+
+export const getStaticPaths = (() => langPaths()) satisfies GetStaticPaths;
+
+const lang = Astro.params.lang as Lang;
+const ui = t(lang);
+const featured = (await getProjects(lang)).filter((p) => p.data.featured).slice(0, 3);
+---
+
+<Base lang={lang} route="/">
+  <!-- ============ HERO ============ -->
+  <section class="relative isolate overflow-hidden" aria-labelledby="hero-title">
+    <div class="hero-fallback hero-mask bg-grid absolute inset-0 -z-10" aria-hidden="true"></div>
+    <canvas class="hero-canvas hero-mask absolute inset-0 -z-10 h-full w-full" data-hero-canvas aria-hidden="true"></canvas>
+    <div class="absolute inset-x-0 bottom-0 -z-10 h-40 bg-linear-to-b from-transparent to-bg" aria-hidden="true">
+    </div>
+
+    <div class="container-site flex min-h-[calc(100svh-6rem)] flex-col justify-center py-16 md:py-24">
+      <p class="font-mono text-sm text-accent" data-scramble>{ui.hero.label}</p>
+
+      <h1
+        id="hero-title"
+        class="mt-5 text-[clamp(2.35rem,9.4vw,9.5rem)] leading-[0.95] font-semibold tracking-[-0.05em] whitespace-nowrap"
+      >
+        <span class="block" data-scramble>{ui.hero.firstName}</span>
+        <span class="block" data-scramble>{ui.hero.lastName}</span>
+      </h1>
+
+      <p class="mt-7 max-w-2xl text-base leading-relaxed text-muted sm:text-lg md:text-xl">
+        {ui.hero.subtitle}
+      </p>
+
+      <div class="mt-9 flex flex-wrap gap-3">
+        <a href={path(lang, '/projets/')} class="btn btn-primary">
+          {ui.hero.ctaProjects} <span aria-hidden="true">→</span>
+        </a>
+        <a href={site.cv[lang]} download class="btn btn-ghost">
+          {ui.hero.ctaCv} <span aria-hidden="true">↓</span>
+        </a>
+      </div>
+
+      <p class="mt-12 hidden items-center gap-2 font-mono text-xs text-muted md:flex">
+        <kbd>²</kbd>
+        {ui.hero.terminalHintOr}
+        <kbd>/</kbd>
+        {ui.hero.terminalHintEnd}
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ CHIFFRES CLÉS ============ -->
+  <section class="container-site py-20 md:py-28" aria-labelledby="stats-title">
+    <h2 id="stats-title" class="label mb-8"><span class="text-accent">//</span> {ui.stats.title}</h2>
+    <dl class="grid grid-cols-2 gap-px overflow-hidden rounded-lg bg-line lg:grid-cols-4" data-reveal-group>
+      {
+        ui.stats.items.map((stat) => (
+          <div class="flex flex-col-reverse justify-end gap-3 bg-bg p-5 sm:p-7">
+            <dt class="text-sm text-muted">{stat.label}</dt>
+            <dd class="font-mono text-4xl font-medium tracking-tight tabular-nums sm:text-5xl md:text-6xl">
+              {stat.prefix}
+              {stat.value !== null && <span data-count={stat.value}>{stat.value}</span>}
+              <span class={stat.value === null ? '' : 'text-accent'}>{stat.suffix}</span>
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+  </section>
+
+  <!-- ============ PROJETS À LA UNE ============ -->
+  <section class="container-site py-12 md:py-20" aria-labelledby="featured-title">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <SectionTitle label="projets" title={ui.featured.title} id="featured-title" />
+      <a href={path(lang, '/projets/')} class="glitch-self mb-12 font-mono text-sm text-muted hover:text-accent md:mb-16">
+        {ui.featured.all} →
+      </a>
+    </div>
+    <div class="grid gap-4 md:grid-cols-3" data-reveal-group>
+      {featured.map((project, i) => <ProjectCard project={project} lang={lang} index={i} />)}
+    </div>
+  </section>
+
+  <!-- ============ CE QUE JE CHERCHE ============ -->
+  <section class="container-site py-20 md:py-28" aria-labelledby="looking-title">
+    <div class="bg-grid relative overflow-hidden rounded-lg bg-surface p-6 sm:p-10 md:p-14" data-reveal>
+      <p class="label"><span class="text-accent">//</span> status: open</p>
+      <h2 id="looking-title" class="mt-4 text-4xl font-semibold tracking-[-0.035em] sm:text-5xl" data-scramble-view>
+        {ui.looking.title}
+      </h2>
+      <ul class="mt-8 space-y-3 font-mono text-sm sm:text-base">
+        {
+          ui.looking.lines.map((item) => (
+            <li class="flex gap-3">
+              <span class="text-accent" aria-hidden="true">
+                &gt;
+              </span>
+              <span>{item}</span>
+            </li>
+          ))
+        }
+      </ul>
+      <a href={path(lang, '/contact/')} class="btn btn-primary mt-10">
+        {ui.looking.cta} <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,13 @@
+---
+/**
+ * Affiche un texte en mettant en évidence les "[TODO ...]" restants.
+ * Usage : <Txt text="Bonjour [TODO prénom]" />
+ */
+interface Props {
+  text: string;
+}
+const { text } = Astro.props;
+const parts = text.split(/(\[TODO[^\]]*\])/g).filter(Boolean);
+---
+
+{parts.map((part) => (part.startsWith('[TODO') ? <span class="todo">{part}</span> : part))}

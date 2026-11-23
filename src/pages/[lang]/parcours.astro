@@ -1,0 +1,58 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getOrdered } from '../../lib/collections';
+import Base from '../../layouts/Base.astro';
+import SectionTitle from '../../components/SectionTitle.astro';
+import Txt from '../../components/Txt.astro';
+import { t, pick, langPaths, type Lang } from '../../i18n';
+
+export const getStaticPaths = (() => langPaths()) satisfies GetStaticPaths;
+
+const lang = Astro.params.lang as Lang;
+const ui = t(lang);
+// Trié par le champ "order" de parcours.json (1 = le plus récent)
+const steps = await getOrdered('parcours');
+---
+
+<Base lang={lang} route="/parcours/" title={ui.journey.title} description={ui.journey.intro}>
+  <section class="container-site pt-16 md:pt-24">
+    <SectionTitle as="h1" label="cat parcours.log" title={ui.journey.title} />
+    <p class="max-w-2xl text-lg text-muted md:text-xl">{ui.journey.intro}</p>
+
+    <ol class="relative mt-20 md:mt-28">
+      <!-- Ligne de fond + ligne qui se dessine au scroll -->
+      <span class="absolute top-2 bottom-2 left-[7px] w-px bg-line md:left-[calc(11rem+7px)]" aria-hidden="true">
+        <span class="timeline-progress absolute inset-0 bg-accent"></span>
+      </span>
+
+      {
+        steps.map((step, i) => (
+          <li class="relative grid gap-3 pb-16 pl-10 last:pb-0 md:grid-cols-[11rem_1fr] md:gap-0 md:pl-0">
+            <p class="font-mono text-sm text-muted md:pt-0.5 md:pr-10 md:text-right">
+              <Txt text={step.data.period} />
+            </p>
+
+            <span
+              class:list={[
+                'absolute top-1.5 left-0 h-[15px] w-[15px] rounded-full border md:left-44',
+                i === 0 ? 'border-accent bg-accent' : 'border-line bg-bg',
+              ]}
+              aria-hidden="true"
+            />
+
+            <div class="md:pl-12">
+              <p class="label mb-2">
+                {step.data.type === 'formation' ? ui.journey.formation : ui.journey.experience}
+              </p>
+              <h2 class="text-2xl font-semibold tracking-tight md:text-3xl">{pick(lang, step.data.title)}</h2>
+              <p class="mt-1 font-mono text-sm text-accent">{step.data.place}</p>
+              <p class="mt-4 max-w-xl leading-relaxed text-muted" data-reveal={i > 0 ? 'lines' : undefined}>
+                {pick(lang, step.data.text)}
+              </p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+</Base>

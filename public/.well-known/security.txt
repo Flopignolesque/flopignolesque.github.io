@@ -1,0 +1,7 @@
+# Vous avez trouvé une faille sur ce site ? Merci de me l'écrire.
+# Found a vulnerability on this site? Please let me know.
+Contact: mailto:florian.taesch.wolffer.pro@gmail.com
+Expires: 2027-11-23T00:00:00.000Z
+Preferred-Languages: fr, en
+Canonical: https://flopignolesque.github.io/.well-known/security.txt
+Policy: https://flopignolesque.github.io/fr/projets/sous-le-capot/

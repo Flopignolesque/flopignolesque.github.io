@@ -1,0 +1,26 @@
+---
+/**
+ * La racine "/" redirige vers la version française.
+ * Redirection HTML (pas de JavaScript, compatible avec la CSP).
+ */
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; style-src 'self'; object-src 'none'; base-uri 'none'" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="refresh" content="0; url=/fr/" />
+    <title>Florian TAESCH-WOLFFER</title>
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href="https://flopignolesque.github.io/fr/" />
+    <link rel="alternate" hreflang="fr" href="https://flopignolesque.github.io/fr/" />
+    <link rel="alternate" hreflang="en" href="https://flopignolesque.github.io/en/" />
+    <link rel="alternate" hreflang="x-default" href="https://flopignolesque.github.io/fr/" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <p><a href="/fr/">Français</a> · <a href="/en/">English</a></p>
+  </body>
+</html>

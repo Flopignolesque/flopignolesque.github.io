@@ -1,0 +1,150 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getOrdered } from '../../lib/collections';
+import Base from '../../layouts/Base.astro';
+import SectionTitle from '../../components/SectionTitle.astro';
+import Txt from '../../components/Txt.astro';
+import { t, pick, langPaths, type Lang } from '../../i18n';
+
+export const getStaticPaths = (() => langPaths()) satisfies GetStaticPaths;
+
+const lang = Astro.params.lang as Lang;
+const ui = t(lang);
+
+const groups = await getOrdered('skills');
+const learning = (await getOrdered('learning')).filter((l) => l.data.status !== 'prévu');
+const assets = await getOrdered('assets');
+const certifs = assets.filter((a) => a.data.group === 'certif');
+const soft = assets.filter((a) => a.data.group === 'soft');
+
+const levels = ['solide', 'aise', 'notions'] as const;
+const dots = { solide: 3, aise: 2, notions: 1 };
+---
+
+<Base lang={lang} route="/competences/" title={ui.skills.title} description={ui.skills.intro}>
+  <section class="container-site pt-16 md:pt-24">
+    <SectionTitle as="h1" label="skills --tree" title={ui.skills.title} />
+    <p class="max-w-2xl text-lg text-muted md:text-xl">{ui.skills.intro}</p>
+
+    <!-- Légende -->
+    <ul class="mt-10 flex flex-wrap gap-x-8 gap-y-3 font-mono text-xs text-muted">
+      {
+        levels.map((level) => (
+          <li class="flex items-center gap-2">
+            <span class="flex gap-1" aria-hidden="true">
+              {[1, 2, 3].map((n) => (
+                <span class:list={['h-2 w-2 rounded-full', n <= dots[level] ? 'bg-accent' : 'bg-surface-2']} />
+              ))}
+            </span>
+            {ui.skills.levels[level]}
+          </li>
+        ))
+      }
+    </ul>
+
+    <!-- Domaines -->
+    <div class="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3" data-reveal-group>
+      {
+        groups.map((group) => (
+          <section class="rounded-lg bg-surface p-6" aria-labelledby={`skill-${group.id}`}>
+            <h2 id={`skill-${group.id}`} class="font-mono text-sm text-accent">
+              <span class="text-muted">./</span>
+              {pick(lang, group.data.name).toLowerCase()}
+            </h2>
+            <ul class="mt-5 divide-y divide-line/60">
+              {group.data.items.map((item) => (
+                <li class="flex items-center justify-between gap-4 py-2.5">
+                  <span>{item.name}</span>
+                  <span class="flex shrink-0 items-center gap-2">
+                    <span class="sr-only">{ui.skills.levels[item.level]}</span>
+                    <span class="flex gap-1" aria-hidden="true">
+                      {[1, 2, 3].map((n) => (
+                        <span
+                          class:list={['h-2 w-2 rounded-full', n <= dots[item.level] ? 'bg-accent' : 'bg-surface-2']}
+                        />
+                      ))}
+                    </span>
+                    <span class="hidden w-16 text-right font-mono text-[0.7rem] text-muted sm:inline" aria-hidden="true">
+                      {ui.skills.levels[item.level]}
+                    </span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- J'apprends en ce moment : n'apparaît que s'il y a au moins une ligne "en cours" ou "terminé" -->
+  {
+    learning.length > 0 && (
+      <section class="container-site pt-24" aria-labelledby="learning-title">
+        <p class="label">
+          <span class="text-accent">//</span> tail -f learning.log
+        </p>
+        <h2 id="learning-title" class="mt-3 text-3xl font-semibold tracking-tight md:text-4xl" data-scramble-view>
+          {ui.skills.learningTitle}
+        </h2>
+        <ul class="mt-8 divide-y divide-line border-y border-line font-mono text-sm" data-reveal-group>
+          {learning.map((item) => (
+            <li class="flex flex-wrap items-center justify-between gap-3 py-4">
+              <span>
+                <span class="text-fg">{item.data.name}</span>
+                <span class="text-muted"> · {item.data.org}</span>
+              </span>
+              <span class:list={['text-xs', item.data.status === 'terminé' ? 'text-accent' : 'text-muted']}>
+                [{item.data.status === 'terminé' ? '✓' : '…'} {ui.skills.learningStatus[item.data.status]}]
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  <div class="container-site grid gap-16 pt-24 lg:grid-cols-2 lg:gap-10">
+    <!-- Certifications et atouts -->
+    <section aria-labelledby="certifs-title">
+      <p class="label"><span class="text-accent">//</span> certs</p>
+      <h2 id="certifs-title" class="mt-3 text-3xl font-semibold tracking-tight md:text-4xl" data-scramble-view>
+        {ui.skills.certifsTitle}
+      </h2>
+      <ul class="mt-8 space-y-3" data-reveal-group>
+        {
+          certifs.map((c) => (
+            <li class="flex gap-3">
+              <span class="font-mono text-accent" aria-hidden="true">
+                +
+              </span>
+              <span>
+                <Txt text={pick(lang, c.data.label)} />
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <!-- Soft skills, avec une preuve à chaque fois -->
+    <section aria-labelledby="soft-title">
+      <p class="label"><span class="text-accent">//</span> soft skills</p>
+      <h2 id="soft-title" class="mt-3 text-3xl font-semibold tracking-tight md:text-4xl" data-scramble-view>
+        {ui.skills.softTitle}
+      </h2>
+      <dl class="mt-8 space-y-6" data-reveal-group>
+        {
+          soft.map((s) => (
+            <div>
+              <dt class="font-medium">
+                <Txt text={pick(lang, s.data.label)} />
+              </dt>
+              {s.data.proof && <dd class="mt-1 text-muted">{pick(lang, s.data.proof)}</dd>}
+            </div>
+          ))
+        }
+      </dl>
+    </section>
+  </div>
+</Base>

@@ -1,0 +1,82 @@
+[
+  {
+    "id": "vie-privee",
+    "order": 1,
+    "large": true,
+    "visual": "privacy",
+    "title": { "fr": "Vie privée numérique", "en": "Digital privacy" },
+    "text": {
+      "fr": "J'ai dégooglisé mon quotidien. GrapheneOS sur mon téléphone, Signal pour les messages, l'écosystème Proton, LibreWolf et Brave pour naviguer. Mes mots de passe sont passés sur Bitwarden : 258 entrées migrées.",
+      "en": "I moved my daily life off Google. GrapheneOS on my phone, Signal for messages, the Proton ecosystem, LibreWolf and Brave for browsing. My passwords now live in Bitwarden: 258 entries migrated."
+    },
+    "takeaway": {
+      "fr": "La sécurité, je l'applique d'abord à moi-même.",
+      "en": "I apply security to myself first."
+    },
+    "chips": ["GrapheneOS", "Signal", "Proton", "LibreWolf", "Brave", "Bitwarden"]
+  },
+  {
+    "id": "hardware",
+    "order": 2,
+    "large": false,
+    "visual": "setup",
+    "title": { "fr": "Hardware & mon setup", "en": "Hardware & my setup" },
+    "text": {
+      "fr": "Plus de 10 PC montés pour des amis. Le mien tourne sur un i9-9900K et une RTX 5070.",
+      "en": "More than 10 PCs built for friends. Mine runs an i9-9900K and an RTX 5070."
+    },
+    "takeaway": {
+      "fr": "Diagnostic, compatibilité des composants, montage.",
+      "en": "Troubleshooting, part compatibility, assembly."
+    },
+    "chips": ["cpu=i9-9900K", "gpu=RTX 5070", "next=i7-14700KF + DDR5", "built=10+ PC"]
+  },
+  {
+    "id": "auto",
+    "order": 3,
+    "large": false,
+    "visual": "car",
+    "title": { "fr": "Électronique auto", "en": "Car electronics" },
+    "text": {
+      "fr": "J'ai installé un caisson de basses Pioneer dans une DS4 : choix du kit de câblage, alimentation, fusibles.",
+      "en": "I fitted a Pioneer subwoofer in a DS4: choosing the wiring kit, power, fuses."
+    },
+    "takeaway": {
+      "fr": "Lecture de specs, câblage, rigueur.",
+      "en": "Reading specs, wiring, attention to detail."
+    },
+    "chips": []
+  },
+  {
+    "id": "musique",
+    "order": 4,
+    "large": false,
+    "visual": "music",
+    "title": { "fr": "Musique", "en": "Music" },
+    "text": {
+      "fr": "Musique électronique. Je crée des morceaux avec des amis grâce à l'IA (Suno).",
+      "en": "Electronic music. I make tracks with friends using AI (Suno)."
+    },
+    "takeaway": {
+      "fr": "Créer à plusieurs, tester, recommencer.",
+      "en": "Making things as a group, testing, trying again."
+    },
+    "chips": []
+  },
+  {
+    "id": "sport",
+    "order": 5,
+    "large": false,
+    "visual": "sport",
+    "title": { "fr": "Sport", "en": "Training" },
+    "text": {
+      "fr": "Musculation.",
+      "en": "Weight training."
+    },
+    "takeaway": {
+      "fr": "Régularité, discipline.",
+      "en": "Consistency, discipline."
+    },
+    "chips": []
+  }
+]

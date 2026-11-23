@@ -1,0 +1,72 @@
+---
+import type { GetStaticPaths } from 'astro';
+import Base from '../../layouts/Base.astro';
+import { t, path, langPaths, type Lang } from '../../i18n';
+import { site, encodedMail } from '../../data/site';
+
+export const getStaticPaths = (() => langPaths()) satisfies GetStaticPaths;
+
+const lang = Astro.params.lang as Lang;
+const ui = t(lang);
+const fr = lang === 'fr';
+---
+
+<Base lang={lang} route="/mentions-legales/" title={ui.legal.title}>
+  <article class="container-site pt-16 md:pt-24">
+    <p class="label"><span class="text-accent">//</span> legal</p>
+    <h1 class="mt-4 text-5xl font-semibold tracking-[-0.04em] md:text-6xl">{ui.legal.title}</h1>
+
+    <div class="prose-site mt-6">
+      <h2>{fr ? 'Éditeur' : 'Publisher'}</h2>
+      <p>
+        {site.author}, {fr ? 'particulier' : 'private individual'}.
+        <br />
+        {fr ? 'Directeur de la publication' : 'Publication director'} : {site.author}.
+        <br />
+        <span data-mail={encodedMail()}>
+          {fr ? 'Contact' : 'Contact'} : <a data-mail-link hidden href="#"><span data-mail-text></span></a>
+          <noscript>florian.taesch.wolffer.pro [at] gmail [dot] com</noscript>
+        </span>
+        {' '}(<a href={path(lang, '/contact/')}>{fr ? 'page contact' : 'contact page'}</a>)
+      </p>
+
+      <h2>{fr ? 'Hébergeur' : 'Host'}</h2>
+      <p>
+        GitHub, Inc. (GitHub Pages)<br />
+        88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA<br />
+        <a href="https://docs.github.com/site-policy" rel="noopener noreferrer" target="_blank">docs.github.com/site-policy</a>
+      </p>
+
+      <h2>{fr ? 'Données personnelles' : 'Personal data'}</h2>
+      {
+        fr ? (
+          <p>
+            Ce site ne collecte aucune donnée. Pas de cookie, pas de traceur, pas de mesure d'audience, aucun script
+            tiers. Les polices sont hébergées sur le site lui-même. GitHub, en tant qu'hébergeur, peut conserver des
+            journaux techniques (adresse IP) pour la sécurité de son service.
+          </p>
+        ) : (
+          <p>
+            This site collects no data. No cookies, no trackers, no analytics, no third-party scripts. Fonts are served
+            from the site itself. GitHub, as the host, may keep technical logs (IP address) to secure its service.
+          </p>
+        )
+      }
+
+      <h2>{fr ? 'Propriété intellectuelle' : 'Intellectual property'}</h2>
+      {
+        fr ? (
+          <p>
+            Les textes et visuels de ce site sont la propriété de {site.author}, sauf mention contraire. Polices Geist
+            (Vercel) sous licence SIL Open Font License.
+          </p>
+        ) : (
+          <p>
+            Text and visuals on this site belong to {site.author} unless stated otherwise. Geist fonts (Vercel) under
+            the SIL Open Font License.
+          </p>
+        )
+      }
+    </div>
+  </article>
+</Base>

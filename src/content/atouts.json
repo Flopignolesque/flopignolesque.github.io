@@ -1,0 +1,38 @@
+[
+  { "id": "pix", "order": 1, "group": "certif", "label": { "fr": "PIX niveau 7 complet (896 pix)", "en": "PIX level 7, complete (896 pix)" } },
+  { "id": "anglais", "order": 2, "group": "certif", "label": { "fr": "Anglais B2", "en": "English B2" } },
+  { "id": "permis", "order": 3, "group": "certif", "label": { "fr": "Permis B, véhiculé", "en": "Driving licence, own car" } },
+  { "id": "thm", "order": 4, "group": "certif", "label": { "fr": "TryHackMe : [TODO profil TryHackMe]", "en": "TryHackMe: [TODO profil TryHackMe]" } },
+  {
+    "id": "pedagogie", "order": 5,
+    "group": "soft",
+    "label": { "fr": "Pédagogie / support", "en": "Explaining / support" },
+    "proof": {
+      "fr": "Je suis le conseiller informatique de mon entourage. Plus de 10 PC montés et dépannés pour des amis.",
+      "en": "I'm the go-to tech person for friends and family. Built and fixed more than 10 PCs for friends."
+    }
+  },
+  {
+    "id": "autonomie", "order": 6,
+    "group": "soft",
+    "label": { "fr": "Autonomie", "en": "Self-reliance" },
+    "proof": {
+      "fr": "Nocturne : conçu et développé seul, en 3 mois.",
+      "en": "Nocturne: designed and built on my own, in 3 months."
+    }
+  },
+  {
+    "id": "fiabilite", "order": 7,
+    "group": "soft",
+    "label": { "fr": "Fiabilité", "en": "Reliability" },
+    "proof": {
+      "fr": "En grande distribution : respect des procédures, contrôle des erreurs de prix.",
+      "en": "Retail job: following procedures, catching pricing errors."
+    }
+  },
+  {
+    "id": "autres", "order": 8,
+    "group": "soft",
+    "label": { "fr": "[TODO autres qualités]", "en": "[TODO autres qualités]" }
+  }
+]

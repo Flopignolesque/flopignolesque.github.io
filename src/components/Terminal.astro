@@ -1,0 +1,78 @@
+---
+/**
+ * Coquille HTML du terminal. Toute la logique (src/scripts/terminal.ts)
+ * n'est téléchargée qu'à la première ouverture.
+ */
+import { t, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const ui = t(lang);
+---
+
+<button
+  type="button"
+  class="fixed right-4 bottom-4 z-40 inline-flex h-11 items-center gap-2 rounded-md border border-line bg-surface/90 px-3 font-mono text-xs text-muted backdrop-blur transition-colors hover:border-accent hover:text-accent"
+  data-terminal-open
+  aria-haspopup="dialog"
+  aria-controls="terminal"
+>
+  <span class="text-accent" aria-hidden="true">&gt;_</span>
+  <span class="sr-only sm:not-sr-only">{ui.footer.terminal}</span>
+</button>
+
+<dialog
+  id="terminal"
+  class="terminal-dialog font-mono text-[13px] leading-relaxed"
+  aria-labelledby="terminal-title"
+  data-src={`/${lang}/terminal.json`}
+>
+  <div class="flex items-center gap-3 border-b border-line px-4 py-2.5">
+    <span class="flex gap-1.5" aria-hidden="true">
+      <span class="h-2.5 w-2.5 rounded-full bg-surface-2"></span>
+      <span class="h-2.5 w-2.5 rounded-full bg-surface-2"></span>
+      <span class="h-2.5 w-2.5 rounded-full bg-accent/70"></span>
+    </span>
+    <h2 id="terminal-title" class="flex-1 text-center text-xs text-muted">florian@portfolio: ~</h2>
+    <button
+      type="button"
+      class="-mr-2 inline-flex h-9 w-9 items-center justify-center rounded text-muted hover:text-fg"
+      data-terminal-close
+      aria-label={ui.terminal.close}
+    >
+      ✕
+    </button>
+  </div>
+
+  <div class="relative min-h-0 flex-1">
+    <div class="terminal-scan" aria-hidden="true"></div>
+    <div
+      class="term-out h-full overflow-y-auto px-4 py-3 break-words whitespace-pre-wrap"
+      role="log"
+      aria-live="polite"
+      data-terminal-output
+      data-lenis-prevent
+    >
+    </div>
+  </div>
+
+  <form class="flex items-center gap-2 border-t border-line px-4 py-3" data-terminal-form>
+    <label for="terminal-input" class="shrink-0 text-accent">
+      <span aria-hidden="true">florian@portfolio:~$</span>
+      <span class="sr-only">{ui.terminal.inputLabel}</span>
+    </label>
+    <input
+      id="terminal-input"
+      class="min-w-0 flex-1 bg-transparent text-fg caret-accent outline-none"
+      type="text"
+      autocomplete="off"
+      autocapitalize="off"
+      autocorrect="off"
+      spellcheck="false"
+      enterkeyhint="send"
+      data-terminal-input
+    />
+  </form>
+</dialog>

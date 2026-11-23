@@ -1,0 +1,10 @@
+[
+  { "id": "secnum", "order": 1, "name": "SecNumacadémie", "org": "ANSSI", "status": "prévu", "url": "https://secnumacademie.gouv.fr/" },
+  { "id": "cisco-cyber", "order": 2, "name": "Introduction to Cybersecurity", "org": "Cisco Networking Academy", "status": "prévu" },
+  { "id": "cisco-net", "order": 3, "name": "Networking Basics", "org": "Cisco Networking Academy", "status": "prévu" },
+  { "id": "fortinet", "order": 4, "name": "Fortinet Certified Fundamentals", "org": "Fortinet", "status": "prévu" },
+  { "id": "thm-pre", "order": 5, "name": "Pre Security", "org": "TryHackMe", "status": "prévu" },
+  { "id": "thm-101", "order": 6, "name": "Cyber Security 101", "org": "TryHackMe", "status": "prévu" },
+  { "id": "docker", "order": 7, "name": "Docker", "org": "Autoformation", "status": "prévu" },
+  { "id": "ctf", "order": 8, "name": "404CTF, FCSC", "org": "CTF", "status": "prévu" }
+]

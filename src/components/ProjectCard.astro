@@ -1,0 +1,43 @@
+---
+import { path, t, type Lang } from '../i18n';
+import { projectSlug, type Project } from '../lib/content';
+
+interface Props {
+  project: Project;
+  lang: Lang;
+  index: number;
+}
+const { project, lang, index } = Astro.props;
+const ui = t(lang);
+const { title, tagline, tags, kind, year } = project.data;
+---
+
+<a
+  href={path(lang, `/projets/${projectSlug(project)}/`)}
+  class="glitch group relative flex min-h-[19rem] flex-col justify-between overflow-hidden rounded-lg bg-surface p-6 transition-colors duration-300 hover:bg-surface-2 md:p-7"
+>
+  <span
+    class="pointer-events-none absolute inset-x-0 top-0 h-px origin-left scale-x-0 bg-accent transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:scale-x-100"
+    aria-hidden="true"></span>
+
+  <div class="flex items-start justify-between gap-4 font-mono text-xs text-muted">
+    <span><span class="text-accent">{String(index + 1).padStart(2, '0')}</span> / {kind}</span>
+    <span>{year}</span>
+  </div>
+
+  <div class="mt-12 space-y-3">
+    <h3 class="glitch-target text-2xl font-semibold tracking-tight md:text-[1.7rem]">{title}</h3>
+    <p class="text-sm leading-relaxed text-muted">{tagline}</p>
+  </div>
+
+  <div class="mt-6 flex items-end justify-between gap-4">
+    <ul class="flex flex-wrap gap-1.5" aria-label="Stack">
+      {tags.slice(0, 4).map((tag) => <li class="tag">{tag}</li>)}
+    </ul>
+    <span
+      class="shrink-0 font-mono text-sm text-muted transition-all duration-300 group-hover:translate-x-1 group-hover:text-accent"
+      aria-hidden="true">→</span
+    >
+    <span class="sr-only">{ui.projects.read}</span>
+  </div>
+</a>

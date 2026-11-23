@@ -1,0 +1,53 @@
+<!doctype html>
+<!--
+  Modèle de l'image de partage (Open Graph, 1200x630) affichée quand le lien
+  du site est partagé (LinkedIn, Discord...). Pour la régénérer :
+  ouvrir ce fichier dans Chrome avec ?lang=fr ou ?lang=en, fenêtre 1200x630,
+  puis capture (ou voir README, section "Image de partage").
+-->
+<html>
+<head>
+<meta charset="utf-8" />
+<style>
+  @font-face { font-family: Geist; src: url('../../public/fonts/geist-sans-600.woff2'); font-weight: 600; }
+  @font-face { font-family: Geist; src: url('../../public/fonts/geist-sans-400.woff2'); font-weight: 400; }
+  @font-face { font-family: 'Geist Mono'; src: url('../../public/fonts/geist-mono-400.woff2'); }
+  :root { --accent: #5cffb0; }
+  html, body { margin: 0; width: 1200px; height: 630px; background: #0a0a0b; color: #ededed; overflow: hidden; }
+  body {
+    position: relative; font-family: Geist, sans-serif; box-sizing: border-box; padding: 72px 80px;
+    background-image:
+      radial-gradient(50% 60% at 85% 20%, rgb(92 255 176 / 0.12), transparent 70%),
+      radial-gradient(rgb(237 237 237 / 0.18) 1.5px, transparent 1.6px);
+    background-size: auto, 26px 26px;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  body::after { content: ''; position: absolute; inset: 0; background: linear-gradient(100deg, #0a0a0b 35%, rgb(10 10 11 / 0.6) 70%, transparent); z-index: 0; }
+  body > * { position: relative; z-index: 1; }
+  .mono { font-family: 'Geist Mono', monospace; }
+  .top { display: flex; justify-content: space-between; font-size: 24px; color: #8a8a8f; }
+  .top b { color: var(--accent); font-weight: 400; }
+  h1 { margin: 0; font-size: 104px; line-height: 0.95; letter-spacing: -0.05em; font-weight: 600; }
+  p { margin: 26px 0 0; font-size: 30px; color: #8a8a8f; max-width: 900px; line-height: 1.35; }
+  .bottom { font-size: 24px; color: var(--accent); }
+</style>
+</head>
+<body>
+  <div class="top mono"><span><b>&gt;</b>FTW_</span><span>flopignolesque.github.io</span></div>
+  <div>
+    <h1>Florian<br />TAESCH-WOLFFER</h1>
+    <p id="sub"></p>
+  </div>
+  <div class="bottom mono" id="status"></div>
+  <script>
+    const en = new URLSearchParams(location.search).get('lang') === 'en';
+    document.documentElement.lang = en ? 'en' : 'fr';
+    document.getElementById('sub').textContent = en
+      ? 'Networks & Telecom student heading into cybersecurity.'
+      : 'Étudiant en BUT Réseaux & Télécoms, futur spécialiste cybersécurité.';
+    document.getElementById('status').textContent = en
+      ? '● Open to work-study · September 2027 · Toulouse / Blagnac'
+      : '● Recherche alternance · Rentrée 2027 · Toulouse / Blagnac';
+  </script>
+</body>
+</html>

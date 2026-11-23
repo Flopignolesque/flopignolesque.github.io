@@ -1,0 +1,606 @@
+@import 'tailwindcss';
+
+/* ==================================================================
+   COULEURS ET POLICES
+   Pour changer la couleur d'accent de tout le site : modifier
+   --color-accent ci-dessous (une seule ligne).
+   ================================================================== */
+@theme {
+  --color-accent: #5cffb0;
+
+  --color-bg: #0a0a0b;
+  --color-surface: #121214;
+  --color-surface-2: #1a1a1d;
+  --color-line: #232327;
+  --color-fg: #ededed;
+  --color-muted: #8a8a8f;
+
+  --font-sans: 'Geist', 'Geist Fallback', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Geist Mono', 'Geist Mono Fallback', ui-monospace, 'Cascadia Mono', monospace;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ------------------------------------------------------------------
+   Polices auto-hébergées (public/fonts/)
+   Les "Fallback" ont les mêmes proportions que Geist :
+   le texte ne saute pas quand la vraie police arrive (CLS).
+   ------------------------------------------------------------------ */
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/geist-sans-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/geist-sans-500.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/geist-sans-600.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('/fonts/geist-mono-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('/fonts/geist-mono-500.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Fallback';
+  src: local('Arial'), local('Helvetica Neue'), local('Roboto');
+  size-adjust: 107.2%;
+  ascent-override: 85.8%;
+  descent-override: 20.5%;
+  line-gap-override: 9.3%;
+}
+@font-face {
+  font-family: 'Geist Mono Fallback';
+  src: local('Courier New'), local('Courier'), local('DejaVu Sans Mono');
+  size-adjust: 100%;
+  ascent-override: 100.5%;
+  descent-override: 29.5%;
+  line-gap-override: 0%;
+}
+
+/* ==================================================================
+   BASE
+   ================================================================== */
+@layer base {
+  html {
+    background: var(--color-bg);
+    color: var(--color-fg);
+    color-scheme: dark;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--color-bg);
+    min-height: 100dvh;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-bg);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  kbd {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    padding: 0.1em 0.45em;
+    border: 1px solid var(--color-line);
+    border-bottom-width: 2px;
+    border-radius: 4px;
+    background: var(--color-surface);
+    color: var(--color-fg);
+  }
+}
+
+/* Lenis (scroll fluide) */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* ==================================================================
+   COMPOSANTS UTILITAIRES
+   ================================================================== */
+@layer components {
+  .container-site {
+    width: 100%;
+    max-width: 82rem;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+  @media (min-width: 768px) {
+    .container-site {
+      padding-inline: 2rem;
+    }
+  }
+  @media (min-width: 1440px) {
+    .container-site {
+      padding-inline: 3rem;
+    }
+  }
+
+  /* Petit label mono : "// 01 projets" */
+  .label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 44px;
+    padding: 0.7rem 1.2rem;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    border-radius: 6px;
+    transition:
+      background-color 0.2s,
+      color 0.2s,
+      border-color 0.2s,
+      transform 0.2s var(--ease-out-expo);
+  }
+  .btn-primary {
+    background: var(--color-accent);
+    color: var(--color-bg);
+    font-weight: 500;
+  }
+  .btn-primary:hover {
+    background: var(--color-fg);
+  }
+  .btn-ghost {
+    border: 1px solid var(--color-line);
+    color: var(--color-fg);
+  }
+  .btn-ghost:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  .link-accent {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 4px;
+    background: var(--color-surface-2);
+    color: var(--color-muted);
+    white-space: nowrap;
+  }
+
+  /* Texte encore à compléter : bien visible pour ne pas l'oublier */
+  .todo {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    color: #ffcf5c;
+    background: rgb(255 207 92 / 0.08);
+    padding: 0 0.3em;
+    border-radius: 3px;
+  }
+}
+
+/* Grille fine de fond (lignes 1px, 4 % d'opacité) */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.04) 1px, transparent 1px);
+  background-size: 64px 64px;
+  background-position: center top;
+}
+
+/* Grain statique, au-dessus de tout, ne capte pas la souris */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  background-image: url('/img/grain.svg');
+  background-size: 220px 220px;
+  opacity: 0.06;
+}
+
+/* ==================================================================
+   PROSE (contenu Markdown des projets)
+   ================================================================== */
+.prose-site {
+  color: var(--color-fg);
+  line-height: 1.7;
+  max-width: 68ch;
+}
+.prose-site h2 {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+}
+.prose-site h2::before {
+  content: '## ';
+  color: var(--color-muted);
+}
+.prose-site p {
+  margin-bottom: 1rem;
+  color: #cfcfd2;
+}
+.prose-site ul {
+  margin-bottom: 1rem;
+  display: grid;
+  gap: 0.6rem;
+}
+.prose-site li {
+  position: relative;
+  padding-left: 1.4rem;
+  color: #cfcfd2;
+}
+.prose-site li::before {
+  content: '›';
+  position: absolute;
+  left: 0.2rem;
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+}
+.prose-site strong {
+  color: var(--color-fg);
+  font-weight: 600;
+}
+.prose-site code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  background: var(--color-surface-2);
+  color: var(--color-fg);
+}
+.prose-site a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+/* ==================================================================
+   EFFET GLITCH (CSS uniquement, 150 ms au survol)
+   ================================================================== */
+@keyframes glitch-rgb {
+  0% {
+    text-shadow:
+      -2px 0 rgb(255 0 90 / 0.75),
+      2px 0 rgb(0 230 255 / 0.75);
+    transform: translateX(0);
+  }
+  33% {
+    text-shadow:
+      2px 0 rgb(255 0 90 / 0.75),
+      -3px 0 rgb(0 230 255 / 0.75);
+    transform: translateX(1px);
+  }
+  66% {
+    text-shadow:
+      -3px 0 rgb(255 0 90 / 0.75),
+      2px 0 rgb(0 230 255 / 0.75);
+    transform: translateX(-1px);
+  }
+  100% {
+    text-shadow: none;
+    transform: translateX(0);
+  }
+}
+.glitch:hover .glitch-target,
+.glitch:focus-visible .glitch-target,
+a.glitch-self:hover,
+a.glitch-self:focus-visible {
+  animation: glitch-rgb 150ms steps(3, end) 1;
+}
+
+/* ==================================================================
+   ANIMATIONS AU SCROLL
+   La classe "motion" est posée sur <html> par public/js/motion-flag.js
+   uniquement si l'utilisateur accepte les animations.
+   Sans JavaScript, ou si le script plante, tout reste visible.
+   ================================================================== */
+.motion [data-reveal],
+.motion [data-reveal-group] > * {
+  opacity: 0;
+}
+
+/* Barre de progression de la timeline (dessinée au scroll) */
+.timeline-progress {
+  transform-origin: top;
+}
+.motion .timeline-progress {
+  transform: scaleY(0);
+}
+
+/* ==================================================================
+   CURSEUR CUSTOM (desktop, souris uniquement)
+   ================================================================== */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 70;
+  pointer-events: none;
+  border-radius: 999px;
+  opacity: 0;
+  will-change: transform;
+}
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  background: var(--color-accent);
+}
+.cursor-ring {
+  width: 34px;
+  height: 34px;
+  margin: -17px 0 0 -17px;
+  border: 1px solid rgb(92 255 176 / 0.5);
+  transition:
+    width 0.25s var(--ease-out-expo),
+    height 0.25s var(--ease-out-expo),
+    margin 0.25s var(--ease-out-expo),
+    background-color 0.25s,
+    border-color 0.25s;
+}
+.cursor-ring.is-hover {
+  width: 58px;
+  height: 58px;
+  margin: -29px 0 0 -29px;
+  background: rgb(92 255 176 / 0.08);
+  border-color: var(--color-accent);
+}
+html.has-cursor .cursor-dot,
+html.has-cursor .cursor-ring {
+  opacity: 1;
+}
+html.has-cursor,
+html.has-cursor * {
+  cursor: none !important;
+}
+html.has-cursor input,
+html.has-cursor textarea {
+  cursor: text !important;
+}
+
+/* ==================================================================
+   TERMINAL
+   ================================================================== */
+.terminal-dialog {
+  position: fixed;
+  inset: auto 1rem 1rem auto;
+  margin: 0;
+  width: min(640px, calc(100vw - 2rem));
+  height: min(440px, calc(100dvh - 6rem));
+  padding: 0;
+  border: 1px solid var(--color-line);
+  border-radius: 10px;
+  background: rgb(10 10 11 / 0.96);
+  color: var(--color-fg);
+  overflow: hidden;
+  box-shadow:
+    0 30px 80px -20px rgb(0 0 0 / 0.8),
+    0 0 0 1px rgb(92 255 176 / 0.06);
+}
+.terminal-dialog::backdrop {
+  background: rgb(0 0 0 / 0.35);
+}
+.terminal-dialog[open] {
+  display: flex;
+  flex-direction: column;
+}
+@media (max-width: 640px) {
+  .terminal-dialog {
+    inset: auto 0.5rem 0.5rem 0.5rem;
+    width: calc(100vw - 1rem);
+    height: min(70dvh, 520px);
+  }
+}
+/* Scanlines CRT très légères */
+.terminal-scan {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgb(255 255 255 / 0.025) 0,
+    rgb(255 255 255 / 0.025) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+.term-out a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+.term-accent {
+  color: var(--color-accent);
+}
+.term-muted {
+  color: var(--color-muted);
+}
+.term-error {
+  color: #ff6b7a;
+}
+
+/* ==================================================================
+   MENU MOBILE
+   ================================================================== */
+.mobile-menu {
+  visibility: hidden;
+  opacity: 0;
+  transition:
+    opacity 0.35s var(--ease-out-expo),
+    visibility 0s linear 0.35s;
+}
+.mobile-menu.is-open {
+  visibility: visible;
+  opacity: 1;
+  transition:
+    opacity 0.35s var(--ease-out-expo),
+    visibility 0s;
+}
+.mobile-menu .mobile-link {
+  transform: translateY(24px);
+  opacity: 0;
+  transition:
+    transform 0.6s var(--ease-out-expo),
+    opacity 0.6s var(--ease-out-expo);
+}
+.mobile-menu.is-open .mobile-link {
+  transform: none;
+  opacity: 1;
+}
+.mobile-menu.is-open .mobile-link:nth-child(2) { transition-delay: 0.04s; }
+.mobile-menu.is-open .mobile-link:nth-child(3) { transition-delay: 0.08s; }
+.mobile-menu.is-open .mobile-link:nth-child(4) { transition-delay: 0.12s; }
+.mobile-menu.is-open .mobile-link:nth-child(5) { transition-delay: 0.16s; }
+.mobile-menu.is-open .mobile-link:nth-child(6) { transition-delay: 0.2s; }
+
+/* Burger -> croix */
+.burger span {
+  transition: transform 0.35s var(--ease-out-expo), opacity 0.2s;
+}
+[aria-expanded='true'] .burger span:first-child {
+  transform: translateY(4px) rotate(45deg);
+}
+[aria-expanded='true'] .burger span:last-child {
+  transform: translateY(-4px) rotate(-45deg);
+}
+
+/* ==================================================================
+   HERO : fond WebGL + fallback CSS
+   ================================================================== */
+.hero-fallback {
+  background:
+    radial-gradient(60% 50% at 70% 30%, rgb(92 255 176 / 0.09), transparent 70%),
+    radial-gradient(50% 60% at 15% 80%, rgb(92 255 176 / 0.05), transparent 70%);
+}
+.hero-mask {
+  mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
+}
+.hero-canvas {
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+.hero-canvas.is-ready {
+  opacity: 1;
+}
+
+/* Point qui clignote (bandeau, statut) */
+@keyframes blink {
+  50% {
+    opacity: 0.25;
+  }
+}
+.blink {
+  animation: blink 1.6s steps(2, start) infinite;
+}
+
+/* Barre de défilement du bandeau sur petit écran */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* ==================================================================
+   TRANSITIONS ENTRE PAGES (View Transitions API, sans JS)
+   Navigateur non compatible : changement de page instantané.
+   ================================================================== */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+  ::view-transition-old(root) {
+    animation: vt-out 0.25s ease both;
+  }
+  ::view-transition-new(root) {
+    animation: vt-in 0.35s var(--ease-out-expo) both;
+  }
+}
+@keyframes vt-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes vt-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+.vt-header {
+  view-transition-name: site-header;
+}
+
+/* ==================================================================
+   ZÉRO MOUVEMENT si l'utilisateur l'a demandé
+   ================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .blink {
+    animation: none;
+  }
+}

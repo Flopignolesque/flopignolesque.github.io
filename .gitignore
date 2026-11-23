@@ -1,0 +1,23 @@
+# build
+dist/
+.astro/
+
+# dépendances
+node_modules/
+
+# logs
+npm-debug.log*
+
+# secrets (il ne doit jamais y en avoir, mais au cas où)
+.env
+.env.*
+
+# système / éditeurs
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# rapports locaux
+lighthouse/

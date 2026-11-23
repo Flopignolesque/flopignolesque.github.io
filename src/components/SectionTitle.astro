@@ -1,0 +1,24 @@
+---
+/** Titre de section : petit label mono + grand titre qui se déchiffre */
+interface Props {
+  label: string;
+  title: string;
+  as?: 'h1' | 'h2';
+  id?: string;
+}
+const { label, title, as: Tag = 'h2', id } = Astro.props;
+---
+
+<div class="mb-10 space-y-3 md:mb-14">
+  <p class="label"><span class="text-accent">//</span> {label}</p>
+  <Tag
+    id={id}
+    class:list={[
+      'font-semibold tracking-[-0.035em] text-balance',
+      Tag === 'h1' ? 'text-5xl sm:text-6xl md:text-7xl lg:text-8xl' : 'text-4xl sm:text-5xl md:text-6xl',
+    ]}
+    data-scramble-view
+  >
+    {title}
+  </Tag>
+</div>

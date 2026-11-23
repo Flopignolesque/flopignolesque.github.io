@@ -1,0 +1,43 @@
+---
+import { t, path, type Lang } from '../i18n';
+import { site } from '../data/site';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const ui = t(lang);
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-32 border-t border-line/70">
+  <div class="container-site grid gap-10 py-12 md:grid-cols-[1fr_auto] md:items-end">
+    <div class="space-y-3">
+      <p class="font-mono text-sm">
+        <span class="text-accent">&gt;</span>FTW
+      </p>
+      <p class="max-w-sm text-sm text-muted">{ui.footer.built}</p>
+    </div>
+    <ul class="flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs text-muted">
+      <li>
+        <a class="inline-flex min-h-11 items-center hover:text-accent" href={path(lang, '/projets/sous-le-capot/')}>
+          {ui.footer.under}
+        </a>
+      </li>
+      <li>
+        <a
+          class="inline-flex min-h-11 items-center hover:text-accent"
+          href={site.github}
+          rel="noopener noreferrer"
+          target="_blank">GitHub</a
+        >
+      </li>
+      <li>
+        <a class="inline-flex min-h-11 items-center hover:text-accent" href={path(lang, '/mentions-legales/')}>
+          {ui.legal.link}
+        </a>
+      </li>
+      <li class="inline-flex min-h-11 items-center">© {year} {site.author}</li>
+    </ul>
+  </div>
+</footer>

@@ -1,0 +1,72 @@
+[
+  {
+    "id": "but-rt", "order": 1,
+    "period": "2026 → ...",
+    "type": "formation",
+    "title": {
+      "fr": "BUT Réseaux & Télécommunications",
+      "en": "BUT Networks & Telecommunications"
+    },
+    "place": "IUT de Blagnac (Toulouse)",
+    "text": {
+      "fr": "Réseaux, systèmes, télécoms. Parcours cybersécurité à partir de la 2e année (2027).",
+      "en": "Networks, systems, telecom. Cybersecurity track from the second year (2027)."
+    }
+  },
+  {
+    "id": "epitech", "order": 2,
+    "period": "2025-2026",
+    "type": "formation",
+    "title": {
+      "fr": "Bachelor cybersécurité, 1re année",
+      "en": "Cybersecurity Bachelor, first year"
+    },
+    "place": "Epitech Strasbourg",
+    "text": {
+      "fr": "Linux tous les jours. C'est là que j'ai compris que je voulais faire du réseau et de la sécu.",
+      "en": "Linux every day. That's where I realised I wanted to work in networking and security."
+    }
+  },
+  {
+    "id": "but-mmi", "order": 3,
+    "period": "2024-2025",
+    "type": "formation",
+    "title": {
+      "fr": "BUT MMI, 1re année",
+      "en": "BUT MMI (multimedia & web), first year"
+    },
+    "place": "IUT de Haguenau",
+    "text": {
+      "fr": "Dev web, bases de la cryptographie, sécurité web (injections SQL, hachage des mots de passe).",
+      "en": "Web development, cryptography basics, web security (SQL injection, password hashing)."
+    }
+  },
+  {
+    "id": "bac", "order": 4,
+    "period": "2021-2024",
+    "type": "formation",
+    "title": {
+      "fr": "Bac STI2D option SIN, mention Très Bien",
+      "en": "French STI2D baccalaureate (digital systems), highest honours"
+    },
+    "place": "Lycée Heinrich Nessel, Haguenau",
+    "text": {
+      "fr": "Projet de terminale en équipe : un bracelet avec capteur de pouls relié à une application (prototype).",
+      "en": "Final year team project: a wristband with a heart rate sensor connected to an app (prototype)."
+    }
+  },
+  {
+    "id": "auchan", "order": 5,
+    "period": "[TODO date]",
+    "type": "experience",
+    "title": {
+      "fr": "Caissier / préparateur de commandes (1 mois)",
+      "en": "Cashier / order picker (1 month)"
+    },
+    "place": "Auchan Schweighouse (Alsace)",
+    "text": {
+      "fr": "Encaissement, préparation de commandes, contrôle des erreurs de prix. Des procédures à respecter à la lettre.",
+      "en": "Checkout, order picking, catching pricing errors. Procedures to follow to the letter."
+    }
+  }
+]

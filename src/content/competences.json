@@ -1,0 +1,62 @@
+[
+  {
+    "id": "reseau", "order": 1,
+    "name": { "fr": "Réseau", "en": "Networking" },
+    "items": [
+      { "name": "Adressage IP", "level": "aise" },
+      { "name": "VLAN", "level": "aise" },
+      { "name": "Routage", "level": "aise" },
+      { "name": "Cisco IOS", "level": "aise" },
+      { "name": "Packet Tracer", "level": "aise" }
+    ]
+  },
+  {
+    "id": "systemes", "order": 2,
+    "name": { "fr": "Systèmes", "en": "Systems" },
+    "items": [
+      { "name": "Linux / ligne de commande", "level": "aise" },
+      { "name": "Windows", "level": "aise" },
+      { "name": "Windows Server", "level": "aise" }
+    ]
+  },
+  {
+    "id": "virtualisation", "order": 3,
+    "name": { "fr": "Virtualisation", "en": "Virtualisation" },
+    "items": [
+      { "name": "VirtualBox", "level": "aise" },
+      { "name": "VMware", "level": "aise" },
+      { "name": "Proxmox", "level": "aise" }
+    ]
+  },
+  {
+    "id": "dev", "order": 4,
+    "name": { "fr": "Dev", "en": "Dev" },
+    "items": [
+      { "name": "Python", "level": "aise" },
+      { "name": "Bash", "level": "aise" },
+      { "name": "HTML / CSS", "level": "aise" },
+      { "name": "JavaScript", "level": "aise" },
+      { "name": "React", "level": "aise" },
+      { "name": "Node.js", "level": "aise" },
+      { "name": "SQL", "level": "aise" }
+    ]
+  },
+  {
+    "id": "securite", "order": 5,
+    "name": { "fr": "Sécurité", "en": "Security" },
+    "items": [
+      { "name": "Sécurité web (injection SQL, hachage)", "level": "aise" },
+      { "name": "Bases de la cryptographie", "level": "aise" },
+      { "name": "Wireshark", "level": "notions" },
+      { "name": "nmap", "level": "notions" }
+    ]
+  },
+  {
+    "id": "hardware", "order": 6,
+    "name": { "fr": "Hardware", "en": "Hardware" },
+    "items": [
+      { "name": "Montage PC", "level": "solide" },
+      { "name": "Diagnostic PC", "level": "solide" }
+    ]
+  }
+]

@@ -1,0 +1,118 @@
+---
+/**
+ * Gabarit commun à toutes les pages : <head> (SEO, sécurité), bandeau,
+ * navigation, pied de page, terminal.
+ */
+import '../styles/global.css';
+import { t, path, languages, type Lang } from '../i18n';
+import { site } from '../data/site';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Terminal from '../components/Terminal.astro';
+
+interface Props {
+  lang: Lang;
+  /** Titre de la page (sans le nom du site) */
+  title?: string;
+  description?: string;
+  /** Chemin sans la langue, ex : "/projets/nocturne/" */
+  route: string;
+  /** Pas d'indexation (404) */
+  noindex?: boolean;
+}
+
+const { lang, title, description, route, noindex = false } = Astro.props;
+const ui = t(lang);
+
+const pageTitle = title ? `${title} · ${ui.meta.siteName}` : `${ui.meta.siteName} · ${lang === 'fr' ? 'Réseaux & cybersécurité' : 'Networks & cybersecurity'}`;
+const pageDescription = description ?? ui.meta.defaultDescription;
+const canonical = new URL(path(lang, route), site.url).href;
+const ogImage = new URL(`/og/og-${lang}.png`, site.url).href;
+
+/*
+ * Content Security Policy (balise meta, GitHub Pages n'envoie pas d'en-têtes).
+ * Uniquement en production : le serveur de dev de Vite a besoin de scripts inline.
+ */
+const csp = [
+  "default-src 'self'",
+  "script-src 'self'",
+  "style-src 'self'",
+  "img-src 'self'",
+  "font-src 'self'",
+  "connect-src 'self'",
+  "media-src 'self'",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'none'",
+  'upgrade-insecure-requests',
+].join('; ');
+---
+
+<!doctype html>
+<html lang={lang} dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    {import.meta.env.PROD && <meta http-equiv="Content-Security-Policy" content={csp} />}
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <meta name="author" content={site.author} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta name="theme-color" content="#0A0A0B" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    {!noindex && <link rel="canonical" href={canonical} />}
+    {
+      !noindex &&
+        languages.map((l) => (
+          <link rel="alternate" hreflang={l} href={new URL(path(l, route), site.url).href} />
+        ))
+    }
+    {!noindex && <link rel="alternate" hreflang="x-default" href={new URL(path('fr', route), site.url).href} />}
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <!-- Open Graph / réseaux sociaux -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={ui.meta.siteName} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content={lang === 'fr' ? 'fr_FR' : 'en_US'} />
+    <meta property="og:locale:alternate" content={lang === 'fr' ? 'en_US' : 'fr_FR'} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Polices principales préchargées (pas de flash de texte) -->
+    <link rel="preload" href="/fonts/geist-sans-400.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/geist-sans-600.woff2" as="font" type="font/woff2" crossorigin />
+
+    <!-- Petit script bloquant : décide si les animations sont actives (voir le fichier) -->
+    <script is:inline src="/js/motion-flag.js"></script>
+  </head>
+  <body class="flex min-h-dvh flex-col">
+    <a
+      href="#contenu"
+      class="sr-only z-[80] rounded-md bg-accent px-4 py-2 font-mono text-sm text-bg focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+    >
+      {ui.nav.skip}
+    </a>
+
+    <Header lang={lang} route={route} />
+
+    <main id="contenu" class="flex-1" tabindex="-1">
+      <slot />
+    </main>
+
+    <Footer lang={lang} />
+    <Terminal lang={lang} />
+    <div class="grain" aria-hidden="true"></div>
+
+    <script>
+      import '../scripts/main';
+    </script>
+  </body>
+</html>

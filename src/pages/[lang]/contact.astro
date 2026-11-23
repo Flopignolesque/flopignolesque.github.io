@@ -1,0 +1,68 @@
+---
+import type { GetStaticPaths } from 'astro';
+import Base from '../../layouts/Base.astro';
+import SectionTitle from '../../components/SectionTitle.astro';
+import Txt from '../../components/Txt.astro';
+import { t, langPaths, isTodo, type Lang } from '../../i18n';
+import { site, encodedMail } from '../../data/site';
+
+export const getStaticPaths = (() => langPaths()) satisfies GetStaticPaths;
+
+const lang = Astro.params.lang as Lang;
+const ui = t(lang);
+---
+
+<Base lang={lang} route="/contact/" title={ui.contact.title} description={ui.contact.intro}>
+  <section class="container-site pt-16 md:pt-24">
+    <SectionTitle as="h1" label="./contact.sh" title={ui.contact.title} />
+    <p class="max-w-2xl text-lg text-muted md:text-xl">{ui.contact.intro}</p>
+
+    <!-- Mail : reconstruit par JavaScript, absent du HTML -->
+    <div class="mt-14 rounded-lg bg-surface p-6 md:p-10" data-mail={encodedMail()} data-reveal>
+      <p class="label"><span class="text-accent">//</span> {ui.contact.mail}</p>
+      <p
+        class="mt-4 font-mono text-[clamp(1rem,4.2vw,2.4rem)] font-medium tracking-tight break-all text-fg"
+        data-mail-text
+      >
+        {ui.contact.noscriptMail}
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a class="btn btn-primary" data-mail-link hidden href="#">
+          {ui.contact.write} <span aria-hidden="true">→</span>
+        </a>
+        <button type="button" class="btn btn-ghost" data-mail-copy data-copied={ui.contact.copied} hidden>
+          <span data-copy-label>{ui.contact.copy}</span>
+        </button>
+      </div>
+    </div>
+
+    <dl class="mt-4 grid gap-4 md:grid-cols-3" data-reveal-group>
+      <div class="rounded-lg bg-surface p-6">
+        <dt class="label">{ui.contact.github}</dt>
+        <dd class="mt-3">
+          <a href={site.github} class="link-accent glitch-self font-mono" rel="noopener noreferrer" target="_blank">
+            {site.githubLabel} ↗
+          </a>
+        </dd>
+      </div>
+      <div class="rounded-lg bg-surface p-6">
+        <dt class="label">{ui.contact.linkedin}</dt>
+        <dd class="mt-3 font-mono">
+          {
+            isTodo(site.linkedin) ? (
+              <Txt text={site.linkedin} />
+            ) : (
+              <a href={site.linkedin} class="link-accent glitch-self" rel="noopener noreferrer" target="_blank">
+                LinkedIn ↗
+              </a>
+            )
+          }
+        </dd>
+      </div>
+      <div class="rounded-lg bg-surface p-6">
+        <dt class="label">{ui.contact.zone}</dt>
+        <dd class="mt-3 font-mono">{ui.contact.zoneValue}</dd>
+      </div>
+    </dl>
+  </section>
+</Base>

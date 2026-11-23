@@ -1,0 +1,27 @@
+---
+import { t, type Lang } from '../i18n';
+import Txt from './Txt.astro';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const ui = t(lang);
+---
+
+<div class="border-b border-line/70 bg-bg">
+  <p
+    class="container-site no-scrollbar flex h-8 items-center gap-2 overflow-x-auto font-mono text-[0.7rem] whitespace-nowrap text-accent sm:text-xs"
+  >
+    <span class="blink" aria-hidden="true">●</span>
+    <span>{ui.banner.text}</span>
+    {
+      ui.banner.items.map((item) => (
+        <>
+          <span class="text-muted" aria-hidden="true">·</span>
+          <span><Txt text={item} /></span>
+        </>
+      ))
+    }
+  </p>
+</div>
