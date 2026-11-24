@@ -73,7 +73,7 @@ Les rapports Lighthouse complets (JSON) sont dans `lighthouse/`.
 Repérables sur le site (texte jaune) et avec `grep -rn "TODO" src`.
 
 **À fournir**
-1. `public/cv/CV_Florian_TAESCH-WOLFFER_FR.pdf` et `..._EN.pdf` (sans téléphone ni adresse). Tant qu'ils manquent, les boutons CV mènent à une 404.
+1. ~~CV FR et EN~~ : faits (sources Word dans `cv-source/`).
 2. Rythme de l'alternance : bandeau du haut, `src/i18n/fr.ts` et `en.ts` (`banner.items`).
 3. Lien LinkedIn : `src/data/site.ts`.
 4. Profil TryHackMe : `src/content/atouts.json`.

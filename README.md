@@ -134,21 +134,28 @@ audit:
 
 ---
 
-## 5. Remplacer le CV
+## 5. Modifier le CV
 
-Déposer les deux PDF dans `public/cv/`, **avec exactement ces noms** :
+Les CV sont des fichiers Word modifiables dans `cv-source/` :
 
 ```
-public/cv/CV_Florian_TAESCH-WOLFFER_FR.pdf
-public/cv/CV_Florian_TAESCH-WOLFFER_EN.pdf
+cv-source/CV_Florian_TAESCH-WOLFFER_FR.docx
+cv-source/CV_Florian_TAESCH-WOLFFER_EN.docx
+cv-source/photo.png          (photo recadrée)
 ```
 
-⚠️ La version publiée ne doit contenir **ni numéro de téléphone ni adresse complète** (la ville suffit).
-Le PDF est public : n'importe qui peut le télécharger.
+1. Ouvrir le `.docx` dans Word, modifier.
+2. **Fichier → Enregistrer sous → PDF**, dans `public/cv/`, avec exactement ce nom :
+   `CV_Florian_TAESCH-WOLFFER_FR.pdf` (ou `_EN.pdf`).
+3. Commit + push : le site est mis à jour.
 
-Vider aussi les métadonnées du PDF (auteur, logiciel, chemin du fichier) avant de le publier.
+⚠️ Ces versions sont publiques : **pas de numéro de téléphone ni d'adresse complète**.
+Les versions « candidature » avec téléphone sont hors du dépôt, dans `Documents\CV\`.
 
----
+**Règles pour passer les logiciels de tri (ATS)** : garder une seule colonne, des titres de
+section standards (Profil, Compétences, Projets, Formation, Expérience...), du vrai texte
+(jamais de texte dans une image ou une zone de texte), pas de tableau pour la mise en page,
+et reprendre les mots-clés exacts de l'offre (VLAN, Linux, Windows Server...) quand c'est vrai.
 
 ## 6. Changer la couleur d'accent
 
